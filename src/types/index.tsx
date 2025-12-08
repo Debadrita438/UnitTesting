@@ -3,3 +3,7 @@ export interface RootStackParamList {
   Signup: undefined;
   Home: undefined;
 }
+
+export interface AuthState {
+  token: string;
+}
