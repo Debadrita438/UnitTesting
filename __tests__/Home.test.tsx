@@ -1,17 +1,27 @@
 import React, { act } from 'react';
-import App from '../App';
-import { render, screen, userEvent } from '@testing-library/react-native';
+import { screen, userEvent } from '@testing-library/react-native';
+import { renderWithProviders } from '../utils/test-utils';
+import { HomeScreen } from '../src/screens';
 
 jest.useFakeTimers();
 
-describe('App', () => {
-  it('renders correctly', () => {
-    render(<App />);
+describe('Home screen', () => {
+  it('renders corrctly when the token is not empty string', () => {
+    const { store } = renderWithProviders(<HomeScreen />, {
+      preloadedState: {
+        auth: {
+          token: '123', // Start with empty token
+        },
+      },
+    });
+
+    const initialToken = store.getState().auth.token;
+    expect(initialToken).not.toBe('');
     expect(screen.getByTestId('count')).toHaveTextContent('0');
   });
 
   it('increments count when button pressed', async () => {
-    render(<App />);
+    renderWithProviders(<HomeScreen />);
     const user = userEvent.setup();
 
     await user.press(screen.getByTestId('btn'));
@@ -19,7 +29,7 @@ describe('App', () => {
   });
 
   it('renders and hides CFirst based on count', async () => {
-    render(<App />);
+    renderWithProviders(<HomeScreen />);
     const user = userEvent.setup();
 
     // press 1 time -> should appear
@@ -34,7 +44,7 @@ describe('App', () => {
   });
 
   it('renders the text passed to the first component', async () => {
-    render(<App />);
+    renderWithProviders(<HomeScreen />);
     const user = userEvent.setup();
 
     await user.press(screen.getByTestId('btn'));
@@ -43,7 +53,7 @@ describe('App', () => {
   });
 
   it('handles multiple state updates', async () => {
-    render(<App />);
+    renderWithProviders(<HomeScreen />);
     const user = userEvent.setup();
 
     await user.press(screen.getByTestId('btn'));
@@ -53,7 +63,7 @@ describe('App', () => {
   });
 
   it('handles complex reducer logic using useReducer', async () => {
-    render(<App />);
+    renderWithProviders(<HomeScreen />);
     const user = userEvent.setup();
 
     await user.press(screen.getByTestId('inc'));
@@ -69,7 +79,7 @@ describe('App', () => {
   });
 
   it('handles timer', async () => {
-    render(<App />);
+    renderWithProviders(<HomeScreen />);
     expect(screen.getByTestId('value')).toHaveTextContent('Start');
     const user = userEvent.setup();
 

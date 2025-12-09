@@ -2,10 +2,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen, LoginScreen, SignupScreen } from '../screens';
 import { useAppSelector } from '../hooks';
 
+const Stack = createNativeStackNavigator();
 const AuthNavigation = () => {
-  const Stack = createNativeStackNavigator();
   const authState = useAppSelector(state => state.auth);
-  console.log('🚀 ~ AuthNavigation ~ authState:', authState);
 
   const authStack = {
     Login: LoginScreen,

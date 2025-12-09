@@ -12,7 +12,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <View>
+    <View testID="login-screen">
       <Text>LoginScreen</Text>
       <Pressable
         style={{ alignSelf: 'center' }}

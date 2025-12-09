@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 
 import { setupStore } from '../src/storage/store';
 import type { AppStore, RootState } from '../src/storage/store';
+import { NavigationContainer } from '@react-navigation/native';
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -23,7 +24,11 @@ export function renderWithProviders(
   }: ExtendedRenderOptions = {},
 ) {
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <Provider store={store}>
+        <NavigationContainer>{children}</NavigationContainer>
+      </Provider>
+    );
   }
 
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };

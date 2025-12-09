@@ -41,7 +41,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="home-screen">
       <Text testID="count">{count}</Text>
       <Text testID="double">{double}</Text>
       <Text testID="quantity">Quantity: {state.quantity}</Text>
