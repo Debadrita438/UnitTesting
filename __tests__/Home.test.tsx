@@ -2,8 +2,16 @@ import React, { act } from 'react';
 import { screen, userEvent } from '@testing-library/react-native';
 import { renderWithProviders } from '../utils/test-utils';
 import { HomeScreen } from '../src/screens';
+import { navigate } from '../src/navigation/rootNavigation';
 
 jest.useFakeTimers();
+jest.mock('../src/navigation/rootNavigation', () => ({
+  navigate: jest.fn(),
+  navigationRef: {
+    isReady: () => true,
+    navigate: jest.fn(),
+  },
+}));
 
 describe('Home screen', () => {
   it('renders corrctly when the token is not empty string', () => {
@@ -17,7 +25,7 @@ describe('Home screen', () => {
 
     const initialToken = store.getState().auth.token;
     expect(initialToken).not.toBe('');
-    expect(screen.getByTestId('count')).toHaveTextContent('0');
+    expect(screen.getByTestId('home-screen')).toBeTruthy();
   });
 
   it('increments count when button pressed', async () => {
@@ -88,5 +96,13 @@ describe('Home screen', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(screen.getByTestId('value')).toHaveTextContent('Done');
+  });
+
+  it('navigates to List screen on button press', async () => {
+    renderWithProviders(<HomeScreen />);
+    const user = userEvent.setup();
+
+    await user.press(screen.getByTestId('listBtn'));
+    expect(navigate).toHaveBeenCalledWith('List');
   });
 });

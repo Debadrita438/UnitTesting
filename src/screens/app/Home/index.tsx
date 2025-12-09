@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React, { useReducer, useState } from 'react';
 import CFirst from '../../../components/CFirst';
+import { navigate } from '../../../navigation/rootNavigation';
 
 const initialState = {
   quantity: 0,
@@ -63,6 +64,9 @@ const HomeScreen = () => {
       </Pressable>
       <Pressable testID="timer" onPress={handleTimer}>
         <Text>Run Timer</Text>
+      </Pressable>
+      <Pressable testID="listBtn" onPress={() => navigate('List')}>
+        <Text>List Display</Text>
       </Pressable>
 
       {/* rendering the component based on condition */}
